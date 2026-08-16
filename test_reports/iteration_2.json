@@ -1,0 +1,39 @@
+{
+  "summary": "FitFlow iteration 2 frontend testing complete. Language selection (4 langs), onboarding + permissions + home flow, step goal +/- with live update, Steps advanced analytics (5 metrics x 3 ranges), Settings sections (General/Personal/Activity/Hydration/Sleep/Notifications/Appearance-7themes/Follow Us/App/Data/About), theme switcher, widget toggle, privacy/terms full content, native ad cards, and language change from Settings all verified working. Deprecated packages: NONE detected (using expo-audio/video style APIs implicitly, no expo-av/expo-barcode-scanner/expo-background-fetch usage found). Minor RN web deprecation warnings observed (shadow* style props, props.pointerEvents, TouchableMixin) - non-blocking, coming from RN internals. Duplicate testIDs on home stat cards (stat-calories/distance/hydration/sleep each appear twice in DOM).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "Home stat cards", "issue": "Each stat card testID (stat-calories, stat-distance, stat-hydration, stat-sleep) appears twice in the DOM. Likely both the pressable wrapper and the inner card share the same testID. Not blocking but breaks unique-selector assumptions. Reference: /app/frontend/app/(tabs)/home.tsx", "testID": "stat-calories/distance/hydration/sleep", "priority": "LOW"}
+    ],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Steps", "issues": ["Two overlapping range controls exist: legacy Segmented (Day/Week/Month) at top AND new range-daily/weekly/monthly under Analytics. Both work, but may confuse users - consider consolidating or renaming header text to clarify scope."]}
+    ],
+    "react_native_issues": [
+      {"component": "GlassCard / shadow styles", "issue": "Console warns 'shadow* style props are deprecated. Use boxShadow.' repeatedly. Reference: uses of shadowColor/shadowOpacity/shadowRadius across /app/frontend/src/components/ui.tsx and /app/frontend/app/language.tsx"},
+      {"component": "Modal/Sheet or Segmented", "issue": "Console warns 'props.pointerEvents is deprecated. Use style.pointerEvents' - stems from a RN component using pointerEvents as a prop. Reference: /app/frontend/src/components/ui.tsx (likely Sheet/Modal or Pressable wrappers)"},
+      {"component": "Touchable component", "issue": "Console warns 'TouchableMixin is deprecated. Please use Pressable.' Some component still uses TouchableOpacity/Highlight family - migrate to Pressable."}
+    ]
+  },
+  "test_report_links": ["/app/test_reports/iteration_2.json"],
+  "action_items": [
+    "Deduplicate testIDs on Home stat cards: remove testID from either the outer Pressable or inner card (keep on Pressable).",
+    "Replace shadow* style props with boxShadow (or split into web/native platform styles) to silence RN 0.75+ web deprecation.",
+    "Refactor any TouchableOpacity/TouchableHighlight/TouchableMixin usage to Pressable.",
+    "Fix 'props.pointerEvents' by moving pointerEvents into the style prop.",
+    "Optional UX: rename the legacy Day/Week/Month segmented control on Steps page (e.g., 'Overview') to distinguish from Analytics Daily/Weekly/Monthly range."
+  ],
+  "critical_code_review_comments": [
+    "Language flow correctly persists langSelected in AsyncStorage and routes via /app/frontend/app/index.tsx guards.",
+    "APP_LINKS in /app/frontend/src/ads/config.ts contains real social URLs; playStore is still placeholder com.fitflow.app - replace before publish.",
+    "AdMob prod unit IDs are placeholders (XXXXXXXXXXXXXXXX) - must be replaced before production build.",
+    "Step goal STEP=100, MIN=1000, MAX=50000 - matches spec; long-press adjusts by 1000 (nice UX)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (frontend only)", "frontend": "~95% - all 13 spec items verified working; only cosmetic RN warnings and duplicate testID"},
+  "seed_data_creation": "None. Used localStorage clear to simulate first launch.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "First-launch flow reachable via localStorage.clear() then reload. Language screen testIDs: language-screen, lang-en/gu/pt/hi, lang-continue. Onboarding uses onboarding-next-button (not onboarding-next). Permissions uses perm-activity-button, perm-notif-button, perm-continue-button. Home tabs live at /home, /steps, /workout, /habits, /body. Settings live at /settings and /settings/step-goal, /settings/privacy, /settings/terms. Step goal starts at whatever is saved; +/- change by 100, long-press by 1000. Analytics metric-* and range-* work but chart values are 0 when no logged data - use hydration add-glass buttons to seed if needed. Duplicate testIDs on home stat cards - use .first() when selecting.",
+  "rca_of_issue": "N/A - no blocking bugs; app functions as specified."
+}

@@ -1,0 +1,199 @@
+{
+  "app_name": "FitFlow",
+  "personality": "7 Dark-First Utility with 6 Glass / Luxe surfaces",
+  "personality_one_liner": "A premium, cinematic fitness command center that uses deep dark glass surfaces, neon accents, and oversized metrics to motivate performance.",
+  "color": {
+    "surface": "#050505",
+    "onSurface": "#FFFFFF",
+    "surfaceSecondary": "#121212",
+    "onSurfaceSecondary": "#EAEAEA",
+    "surfaceTertiary": "#1C1C1C",
+    "onSurfaceTertiary": "#D1D1D1",
+    "surfaceInverse": "#FFFFFF",
+    "onSurfaceInverse": "#050505",
+    "brand": "#FF7A00",
+    "brandPrimary": "#FF7A00",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#FF9A2F",
+    "onBrandSecondary": "#000000",
+    "brandTertiary": "#2E1500",
+    "onBrandTertiary": "#FF9A2F",
+    "success": "#00E676",
+    "onSuccess": "#000000",
+    "warning": "#FFEA00",
+    "onWarning": "#000000",
+    "error": "#FF3D00",
+    "onError": "#FFFFFF",
+    "info": "#29B6F6",
+    "onInfo": "#000000",
+    "border": "#2C2C2C",
+    "borderStrong": "#4A4A4A",
+    "divider": "#1E1E1E",
+    "theme_support": "Implement a theme switcher for 7 themes: Orange (Default), Blue, Red, Green, Purple, Pink, AMOLED Black. The structure above defines the Default Orange theme. For others, swap `brandPrimary`, `brandSecondary`, and `brandTertiary` hues respectively. For AMOLED Black, set `surface`, `surfaceSecondary`, and `surfaceTertiary` to `#000000` with structural borders."
+  },
+  "typography": {
+    "displayFontFamily": "Rajdhani",
+    "textFontFamily": "Manrope",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24,
+      "3xl": 32,
+      "4xl": 48
+    }
+  },
+  "spacing": {
+    "rule": "Use generous vertical padding for sections, but keep internal card spacing dense and structural. Oversize metrics need breathing room.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 12,
+    "md": 20,
+    "lg": 28,
+    "pill": 999
+  },
+  "shadow_tier": 2,
+  "navigation": "bottom_tabs",
+  "icon_set": "Ionicons",
+  "glassmorphism": {
+    "enabled": true,
+    "do's": [
+      "Use expo-blur heavily for all cards (surfaceSecondary) over the #050505 background to create the 'Dark Glassmorphism' effect.",
+      "Apply subtle glowing shadows (using react-native-shadow-2 or similar) around active elements and the circular step ring.",
+      "Ensure text on glass cards remains #FFFFFF with high opacity for readability."
+    ],
+    "dont's": [
+      "Don't use glassmorphism on tiny elements like chips or badges; use solid brandTertiary instead.",
+      "Don't blur the main background itself; keep the background #050505 solid or with a very subtle dark gradient."
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-blur",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid #121212"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler",
+    "charts": "react-native-svg or react-native-gifted-charts"
+  },
+  "screens": [
+    {
+      "name": "Onboarding",
+      "purpose": "Introduce the app with premium 3D fitness artwork and a glowing orange theme.",
+      "states": {
+        "loading": "Dark screen with a glowing orange pulse.",
+        "empty": "N/A",
+        "error": "N/A"
+      },
+      "layout": "Full-bleed background image with a top-to-bottom dark gradient scrim. Walking/running animation or 3D art centered. Large typography at the bottom (Rajdhani). Primary CTA 'Get Started' is a wide pill button with a soft orange shadow (glow), and a secondary 'Skip' text button."
+    },
+    {
+      "name": "Home",
+      "purpose": "The main dashboard visualizing daily progress via a large glowing circular step ring and modular stat cards.",
+      "states": {
+        "loading": "Skeleton loaders using surfaceTertiary.",
+        "empty": "No data yet - 'Take your first steps today!' with an empty ring.",
+        "error": "Failed to load data, show retry button."
+      },
+      "layout": "Header: 'Hi Guest' greeting + notifications/settings icons. Top section: Large glowing circular step ring (use react-native-svg with stroke animation and shadow for neon glow effect). Center the steps (12,458) inside. Middle section: 2x2 grid of glassmorphism cards (Calories, Distance, Hydration, Sleep) with 28dp radius. Bottom section: Weekly Progress mini line chart and Daily Goals checklist. A 'Reset Today's Data' text link at the very bottom."
+    },
+    {
+      "name": "Steps",
+      "purpose": "Detailed view of step history with charts and insights.",
+      "states": {
+        "loading": "Chart skeleton.",
+        "empty": "No steps logged for this period.",
+        "error": "Failed to load chart data."
+      },
+      "layout": "Top: Segmented control (Day/Week/Month) with glass background. Center: Large total steps metric (57,729) in Rajdhani, followed by a tall orange bar chart. Bottom: Scrollable list of insights cards (Total Distance, Calories, Active Time) in dark glass cards."
+    },
+    {
+      "name": "Workout",
+      "purpose": "Start and track live workouts (Walking, Running, Cycling, Custom).",
+      "states": {
+        "loading": "N/A",
+        "empty": "No workout history.",
+        "error": "GPS/Tracking error alert."
+      },
+      "layout": "Horizontal scrollable list of workout types at the top. Large central circular 'Start' button with an intense orange neon glow. Below, a glass card showing current session metrics (Duration, Distance, Calories) or recent history. When active, metrics take over the full screen with Rajdhani font for high legibility."
+    },
+    {
+      "name": "Habits",
+      "purpose": "Track daily lifestyle goals via a checklist.",
+      "states": {
+        "loading": "Skeleton list.",
+        "empty": "No habits configured.",
+        "error": "Error loading habits."
+      },
+      "layout": "Vertical list of habit cards (Drink Water, Sleep Goal, Workout, Walk Goal). Each card is a glass surface with a left-aligned icon, center text + streak count, and a right-aligned custom checkbox (circular, fills with brandPrimary and glows when checked)."
+    },
+    {
+      "name": "Body",
+      "purpose": "Input and track physical measurements.",
+      "states": {
+        "loading": "N/A",
+        "empty": "N/A",
+        "error": "N/A"
+      },
+      "layout": "Form layout with large, touch-friendly glassmorphism cards for each input (Gender, Birth Year, Weight, Height, Step Length). Use custom wheel pickers integrated seamlessly into the dark theme, highlighted by brandSecondary."
+    },
+    {
+      "name": "Settings",
+      "purpose": "App configuration and theme selection.",
+      "states": {
+        "loading": "N/A",
+        "empty": "N/A",
+        "error": "N/A"
+      },
+      "layout": "Standard vertical list of settings categories (Personal, Activity, Theme, etc.). List items have 56pt height, left icon, title, and right chevron. The 'Appearance/Theme' sub-screen must show a horizontal list of 7 color swatches to change the app's primary hue."
+    },
+    {
+      "name": "Hydration Detail",
+      "purpose": "Deep dive into water intake with a large visual.",
+      "states": {
+        "loading": "N/A",
+        "empty": "No water logged today.",
+        "error": "N/A"
+      },
+      "layout": "Hero section: LARGE animated abstract water fill visual (use SVG clip paths or Lottie) that fills up as the user logs water. Displays '2.0L / 2.5L' inside. Below: Quick add glass buttons (+100ml, +200ml, +Glass). Bottom: History list and streak stats."
+    }
+  ],
+  "images": {
+    "onboarding_art": {
+      "url": "https://images.unsplash.com/photo-1730051507404-b56d411199a3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMDNkJTIwZml0bmVzcyUyMHJ1bm5pbmclMjBzaG9lJTIwb3JhbmdlJTIwbmVvbnxlbnwwfHx8fDE3ODY4NTg5NDh8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Abstract orange 3D wave / fitness vibe"
+    },
+    "onboarding_shoe": {
+      "url": "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2Mzl8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMDNkJTIwZml0bmVzcyUyMHJ1bm5pbmclMjBzaG9lJTIwb3JhbmdlJTIwbmVvbnxlbnwwfHx8fDE3ODY4NTg5NDh8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Nike running shoe with orange accents"
+    },
+    "hydration_water_bg": {
+      "url": "https://images.unsplash.com/photo-1566410824233-a8011929225c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njd8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMHdhdGVyJTIwZmlsbCUyMGRyb3BzJTIwZGFya3xlbnwwfHx8fDE3ODY4NTg5NDh8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Dark abstract water texture for hydration background"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Build a premium Android-first fitness app with a 'Dark-First Utility' personality mixed with high-end glassmorphism.",
+    "MANDATORY: Background is strictly #050505. Do not use pure black unless switching to the AMOLED Black theme.",
+    "MANDATORY: Cards must use dark glassmorphism. Implement this using expo-blur layered over a #121212 background with 28dp (lg) border radius.",
+    "MANDATORY: Circular Step Ring on the Home screen must be large and glowing. Use react-native-svg for the ring and apply shadow/drop-shadow effects for the neon glow.",
+    "MANDATORY: Support a 7-theme switcher in Settings. The default is Orange (#FF7A00). Design the architecture to allow swapping the primary/secondary/tertiary brand colors instantly.",
+    "MANDATORY: Bottom Navigation must have 5 tabs (Home, Steps, Workout, Habits, Body). The active tab icon should glow orange (using shadows).",
+    "For charts (Steps, Calories, Sleep), utilize react-native-gifted-charts with custom styling to match the neon/dark theme.",
+    "Use Rajdhani font for all large numbers, metrics, and display headers. Use Manrope for standard body text and labels.",
+    "In the Hydration detail screen, build a custom animated water fill visual (or use a masked view with an animated wave) to represent the 2.0L/2.5L progress.",
+    "Implement haptics on all major interactions: starting a workout, logging water, checking off a habit."
+  ]
+}
